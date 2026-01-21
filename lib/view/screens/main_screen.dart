@@ -47,8 +47,8 @@ class MainScreen extends StatelessWidget {
                   label: "Home",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.delivery_dining_outlined),
-                  activeIcon: Icon(Icons.delivery_dining),
+                  icon: Icon(Icons.directions_car),
+                  activeIcon: Icon(Icons.directions_car_filled),
                   label: "My Order",
                 ),
                 BottomNavigationBarItem(

@@ -1,9 +1,13 @@
 import 'dart:async' show Timer;
 
+import 'package:e_commerce_app/controller/category_controller.dart';
+import 'package:e_commerce_app/view/widgets/category_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 import '../../constants/constant.dart';
+import '../widgets/search.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,6 +18,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   final PageController pageController = PageController();
+  final CategoryController controller = Get.find();
   bool isFavorite = false;
   final List<Map<String, String>> banners = [
     {
@@ -86,38 +91,38 @@ class _HomeScreenState extends State<HomeScreen> {
     },
   ];
 
-  final List<Map<String, dynamic>> categories = [
-    {
-      "name": "Shoes",
-      "count": 123,
-      "image_url":
-          "https://i.pinimg.com/1200x/ff/2a/49/ff2a497111626cdf1bbd16edeab19bd3.jpg",
-    },
-    {
-      "name": "Web Cam",
-      "count": 153,
-      "image_url":
-          "https://i.pinimg.com/736x/41/13/69/411369df2c54c384b173fbb210de838f.jpg",
-    },
-    {
-      "name": "Coconut",
-      "count": 111,
-      "image_url":
-          "https://i.pinimg.com/1200x/27/6d/d4/276dd49787cf64a61a64d808ee76d974.jpg",
-    },
-    {
-      "name": "Avocado",
-      "count": 125,
-      "image_url":
-          "https://i.pinimg.com/736x/79/3b/06/793b0666492baea91947c0680b75dcfa.jpg",
-    },
-    {
-      "name": "Fruits",
-      "count": 100,
-      "image_url":
-          "https://i.pinimg.com/736x/93/90/e6/9390e6cd144f89705ab95dcb0c60fb41.jpg",
-    },
-  ];
+  // final List<Map<String, dynamic>> categories = [
+  //   {
+  //     "name": "Shoes",
+  //     "count": 123,
+  //     "image_url":
+  //         "https://i.pinimg.com/1200x/ff/2a/49/ff2a497111626cdf1bbd16edeab19bd3.jpg",
+  //   },
+  //   {
+  //     "name": "Web Cam",
+  //     "count": 153,
+  //     "image_url":
+  //         "https://i.pinimg.com/736x/41/13/69/411369df2c54c384b173fbb210de838f.jpg",
+  //   },
+  //   {
+  //     "name": "Coconut",
+  //     "count": 111,
+  //     "image_url":
+  //         "https://i.pinimg.com/1200x/27/6d/d4/276dd49787cf64a61a64d808ee76d974.jpg",
+  //   },
+  //   {
+  //     "name": "Avocado",
+  //     "count": 125,
+  //     "image_url":
+  //         "https://i.pinimg.com/736x/79/3b/06/793b0666492baea91947c0680b75dcfa.jpg",
+  //   },
+  //   {
+  //     "name": "Fruits",
+  //     "count": 100,
+  //     "image_url":
+  //         "https://i.pinimg.com/736x/93/90/e6/9390e6cd144f89705ab95dcb0c60fb41.jpg",
+  //   },
+  // ];
 
   int currentPage = 0;
   Timer? timer;
@@ -200,7 +205,7 @@ class _HomeScreenState extends State<HomeScreen> {
               body: Padding(
                 padding: const EdgeInsets.symmetric(vertical: 8),
                 child: TabBarView(
-                  children: [_buildHomeContent(), buildItemCategory()],
+                  children: [_buildHomeContent(), CategoryWidget()],
                 ),
               ),
             ),
@@ -242,7 +247,7 @@ class _HomeScreenState extends State<HomeScreen> {
         Spacer(),
         IconButton(
           onPressed: () {
-            print("Search");
+            Get.to(Search());
           },
           icon: Icon(Icons.search, size: 30, color: kColorTextDark),
         ),
@@ -482,88 +487,6 @@ class _HomeScreenState extends State<HomeScreen> {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _categoryImage(String image, {required bool isLeft}) {
-    return ClipRRect(
-      borderRadius: BorderRadius.horizontal(
-        left: isLeft ? const Radius.circular(16) : Radius.zero,
-        right: !isLeft ? const Radius.circular(16) : Radius.zero,
-      ),
-      child: Image.network(
-        image,
-        width: 250,
-        height: double.infinity,
-        fit: BoxFit.cover,
-      ),
-    );
-  }
-
-  Widget _categoryText(String title, int count) {
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-            ),
-            const SizedBox(height: 6),
-            Text(
-              "$count Products",
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  List<Widget> _imageLeftTextRight(Map<String, dynamic> item) {
-    return [
-      _categoryImage(item["image_url"]!, isLeft: true),
-      _categoryText(item["name"]!, item["count"]!),
-    ];
-  }
-
-  List<Widget> _textLeftImageRight(Map<String, dynamic> item) {
-    return [
-      _categoryText(item["name"]!, item["count"]!),
-      _categoryImage(item["image_url"]!, isLeft: false),
-    ];
-  }
-
-  Widget buildItemCategory() {
-    return ListView.separated(
-      itemCount: categories.length,
-      separatorBuilder: (_, __) => const SizedBox(height: 14),
-      itemBuilder: (context, index) {
-        final item = categories[index];
-        final isEven = index % 2 == 0;
-
-        return GestureDetector(
-          onTap: () {
-            print(item["name"]);
-          },
-          child: Container(
-            height: 120,
-            decoration: BoxDecoration(
-              color: kColorBackgroundCard,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Row(
-              children:
-                  isEven
-                      ? _imageLeftTextRight(item)
-                      : _textLeftImageRight(item),
-            ),
-          ),
-        );
-      },
     );
   }
 

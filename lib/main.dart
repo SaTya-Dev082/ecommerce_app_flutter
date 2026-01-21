@@ -13,17 +13,13 @@ void main() async {
 }
 
 class EcommerceApp extends StatelessWidget {
-  EcommerceApp({super.key});
-  final box = GetStorage();
+  const EcommerceApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: HomeBinding(),
-      darkTheme: ThemeData.dark(useMaterial3: true),
-      theme: ThemeData.light(useMaterial3: true),
-      themeMode: box.read("theme") != "dark" ? ThemeMode.light : ThemeMode.dark,
       initialRoute: "/",
       getPages: getPages,
     );
@@ -493,8 +489,8 @@ class ProductCard extends StatelessWidget {
 */
 
 /*
+import 'package:e_commerce_app/constants/constant.dart';
 import 'package:flutter/material.dart';
-
 
 void main() {
   runApp(TestApp());
@@ -883,7 +879,7 @@ class ProductCard extends StatelessWidget {
               Container(
                 height: 140,
                 decoration: BoxDecoration(
-                  color: kBackgroundCardColor,
+                  color: kColorBackgroundCard,
                   borderRadius: BorderRadius.circular(16),
                 ),
                 child: Center(child: Image.network(image, height: 90)),
