@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/constants/constant.dart';
 import 'package:e_commerce_app/controller/product_controller.dart';
 import 'package:e_commerce_app/view/screens/main_screen.dart';
+import 'package:e_commerce_app/view/widgets/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -179,7 +180,9 @@ class _SearchState extends State<Search> {
                       itemBuilder: (context, index) {
                         final product = controller.searchProductData[index];
                         return ListTile(
-                          onTap: () {},
+                          onTap: () {
+                            Get.to(ProductDetailScreen(product: product));
+                          },
                           selected: true,
                           // selectedTileColor: Colors.blue.shade100,
                           leading: Container(

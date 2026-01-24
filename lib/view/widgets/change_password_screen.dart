@@ -15,7 +15,7 @@ class ChangePasswordScreen extends StatelessWidget {
             passwordField("New Password"),
             passwordField("Confirm Password"),
             const Spacer(),
-            primaryButton("Change Now"),
+            primaryButton("Change Now", onPressed: () {}),
           ],
         ),
       ),

@@ -24,7 +24,9 @@ import 'package:get_storage/get_storage.dart';
 class StorageService {
   static final _box = GetStorage();
 
-  static String get token => _box.read('token');
+  static String? get token => _box.read('token');
+
+  static bool get isLoggedIn => token != null && token!.isNotEmpty;
 
   static Future<void> saveToken(String token) async {
     await _box.write('token', token);

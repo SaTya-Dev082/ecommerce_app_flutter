@@ -21,7 +21,7 @@ class EcommerceApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: HomeBinding(),
-      initialRoute: StorageService.token != null ? "/" : "/onboarding",
+      initialRoute: StorageService.isLoggedIn ? "/" : "/onboarding",
       getPages: getPages,
     );
   }

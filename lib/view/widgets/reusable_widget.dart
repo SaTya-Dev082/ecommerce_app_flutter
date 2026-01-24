@@ -1,3 +1,4 @@
+import 'package:e_commerce_app/constants/constant.dart';
 import 'package:e_commerce_app/controller/authentication_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -65,16 +66,17 @@ Widget inputField({
   required String label,
   required String value,
   required IconData icon,
+  required TextEditingController controller,
 }) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 16),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(label, style: const TextStyle(fontSize: 13, color: Colors.grey)),
+        Text(label, style: const TextStyle(fontSize: 16, color: Colors.grey)),
         const SizedBox(height: 6),
-        TextField(
-          readOnly: true,
+        TextFormField(
+          controller: controller,
           decoration: InputDecoration(
             prefixIcon: Icon(icon),
             hintText: value,
@@ -111,7 +113,7 @@ Widget passwordField(String hint) {
   );
 }
 
-Widget primaryButton(String text) {
+Widget primaryButton(String text, {required VoidCallback onPressed}) {
   return SizedBox(
     width: double.infinity,
     height: 50,
@@ -120,8 +122,8 @@ Widget primaryButton(String text) {
         backgroundColor: const Color(0xFF5B5ACB),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(25)),
       ),
-      onPressed: () {},
-      child: Text(text, style: const TextStyle(fontSize: 16)),
+      onPressed: onPressed,
+      child: Text(text, style: TextStyle(fontSize: 16, color: kColorTextLight)),
     ),
   );
 }
