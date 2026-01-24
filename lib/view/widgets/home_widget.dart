@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:e_commerce_app/controller/product_controller.dart';
+import 'package:e_commerce_app/view/widgets/detail_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -49,64 +50,69 @@ class _buildItemViewState extends State<buildItemView> {
               final product = controller.products[index];
               return SizedBox(
                 width: 180,
-                child: Card(
-                  child: Stack(
-                    children: [
-                      ClipRRect(
-                        borderRadius: BorderRadius.circular(20),
-                        child: CachedNetworkImage(
-                          imageUrl: "http://10.0.2.2:8000${product.imageUrl}",
-                          height: 130,
-                          width: double.infinity,
-                          fit: BoxFit.cover,
+                child: GestureDetector(
+                  onTap: () {
+                    Get.to(ProductDetailScreen(product: product));
+                  },
+                  child: Card(
+                    child: Stack(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: CachedNetworkImage(
+                            imageUrl: "http://10.0.2.2:8000${product.imageUrl}",
+                            height: 130,
+                            width: double.infinity,
+                            fit: BoxFit.cover,
+                          ),
                         ),
-                      ),
-                      Positioned(
-                        bottom: 5,
-                        left: 7,
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              limitText(product.name!),
-                              style: TextStyle(
-                                fontSize: kSizeMedium,
-                                color: kColorPrimary,
-                                fontWeight: FontWeight.w700,
+                        Positioned(
+                          bottom: 5,
+                          left: 7,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                limitText(product.name!),
+                                style: TextStyle(
+                                  fontSize: kSizeMedium,
+                                  color: kColorPrimary,
+                                  fontWeight: FontWeight.w700,
+                                ),
                               ),
-                            ),
-                            Text(
-                              "\$${product.price}",
-                              style: TextStyle(
-                                fontSize: kSizeSmall,
-                                fontWeight: FontWeight.w600,
+                              Text(
+                                "\$${product.price}",
+                                style: TextStyle(
+                                  fontSize: kSizeSmall,
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
-                      ),
 
-                      Positioned(
-                        right: 7,
-                        bottom: 14,
-                        child: GestureDetector(
-                          onTap: () {
-                            controller.toggleFavorite(product.id!);
-                          },
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundColor: kColorTextGrey,
-                            child: Icon(
-                              product.status == "favorite"
-                                  ? Icons.favorite
-                                  : Icons.favorite_border,
-                              color: kColorPrimary,
-                              size: 26,
+                        Positioned(
+                          right: 7,
+                          bottom: 14,
+                          child: GestureDetector(
+                            onTap: () {
+                              controller.toggleFavorite(product.id!);
+                            },
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundColor: kColorTextGrey,
+                              child: Icon(
+                                product.status == "favorite"
+                                    ? Icons.favorite
+                                    : Icons.favorite_border,
+                                color: kColorPrimary,
+                                size: 26,
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               );

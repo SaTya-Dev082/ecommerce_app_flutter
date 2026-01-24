@@ -27,8 +27,9 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       backgroundColor: kColorBackground,
       appBar: AppBar(
         backgroundColor: kColorBackground,
+        centerTitle: true,
         title: Text(
-          "Product",
+          "Favorites",
           style: TextStyle(fontSize: kSizeAppBar, fontWeight: FontWeight.bold),
         ),
       ),

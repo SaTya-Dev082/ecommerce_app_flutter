@@ -115,7 +115,9 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Center(child: CircularProgressIndicator());
                       }
                       return blockProfileHome(
-                        imagePath: "http://10.0.2.2:8000${user.avatar}",
+                        imagePath:
+                            "https://i.pinimg.com/736x/51/b6/b4/51b6b404e5a029c5e97087340be4eb90.jpg",
+                        // "http://10.0.2.2:8000${user.avatar}",
                         username: user.name!,
                       );
                     }),
@@ -270,6 +272,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   children: [
                     Text(
                       "All Products",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Get.to(AllProductsScreen());
+                      },
+                      child: Text(
+                        "See All",
+                        style: TextStyle(
+                          fontSize: kSizeSmall,
+                          color: kColorPrimary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                buildItemView(),
+              ],
+            ),
+          ),
+
+          /// New Arrivals
+          SizedBox(
+            height: 250,
+            width: double.infinity,
+            child: Column(
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Text(
+                      "Popular",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

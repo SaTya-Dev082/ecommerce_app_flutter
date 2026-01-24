@@ -147,4 +147,50 @@ class AuthenticationController extends GetxController {
       Get.snackbar("Error", e.toString());
     }
   }
+
+  // Update user profile
+  Future<void> updateProfile({
+    required String name,
+    required String email,
+    String? avatar,
+  }) async {
+    try {
+      isLoading = true;
+
+      final token = await StorageService.token;
+      final request = http.MultipartRequest(
+        'POST',
+        Uri.parse("$baseUrl/user/update-profile"),
+      );
+
+      request.headers['Authorization'] = 'Bearer $token';
+      if (avatar != null) {
+        request.files.add(await http.MultipartFile.fromPath('avatar', avatar));
+      }
+
+      request.fields.addAll({'name': name});
+      request.fields.addAll({'email': email});
+
+      final streamedResponse = await request.send();
+      final response = await http.Response.fromStream(streamedResponse);
+
+      final data = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        await getProfile();
+        Get.snackbar(
+          "Success",
+          "Profile updated successfully",
+          backgroundColor: Color(0xFF4BB543),
+          colorText: Colors.white,
+        );
+      } else {
+        Get.snackbar("Error", data['message'] ?? 'Update failed');
+      }
+    } catch (e) {
+      Get.snackbar("Error", e.toString());
+    } finally {
+      isLoading = false;
+    }
+  }
 }
