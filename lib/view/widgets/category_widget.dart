@@ -1,4 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:e_commerce_app/controller/product_controller.dart';
+import 'package:e_commerce_app/view/widgets/show_product_category.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -8,6 +10,7 @@ import '../../controller/category_controller.dart';
 class CategoryWidget extends StatelessWidget {
   CategoryWidget({super.key});
   final CategoryController controller = Get.find();
+  final ProductController controller1 = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +32,12 @@ class CategoryWidget extends StatelessWidget {
 
               return GestureDetector(
                 onTap: () {
-                  print(category.name);
+                  Get.to(
+                    ShowProductCategory(
+                      categoryId: category.id!,
+                      categoryName: category.name!,
+                    ),
+                  );
                 },
                 child: Container(
                   height: 140, // ❗ Stack MUST have height
@@ -52,10 +60,13 @@ class CategoryWidget extends StatelessWidget {
                         child: SizedBox(
                           width: 250,
                           height: 140,
-                          child: CachedNetworkImage(
-                            imageUrl:
-                                "http://10.0.2.2:8000${category.imageUrl!}",
-                            fit: BoxFit.cover,
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.all(Radius.circular(20)),
+                            child: CachedNetworkImage(
+                              imageUrl:
+                                  "http://10.0.2.2:8000${category.imageUrl!}",
+                              fit: BoxFit.cover,
+                            ),
                           ),
                         ),
                       ),

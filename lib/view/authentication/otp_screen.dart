@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class OtpBox extends StatelessWidget {
+  const OtpBox({super.key});
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(

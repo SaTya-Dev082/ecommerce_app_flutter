@@ -2,6 +2,7 @@
 
 import 'package:e_commerce_app/binding/home_binding.dart';
 import 'package:e_commerce_app/constants/get_pages.dart';
+import 'package:e_commerce_app/controller/storage_service.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -13,14 +14,14 @@ void main() async {
 }
 
 class EcommerceApp extends StatelessWidget {
-  const EcommerceApp({super.key});
+  EcommerceApp({super.key});
 
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       initialBinding: HomeBinding(),
-      initialRoute: "/",
+      initialRoute: StorageService.token != null ? "/" : "/onboarding",
       getPages: getPages,
     );
   }

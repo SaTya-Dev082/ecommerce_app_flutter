@@ -15,70 +15,48 @@ class OnboardingTemplate extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: Column(
-          children: [
-            const SizedBox(height: 40),
-
-            // Image
-            ClipRRect(
+    return Column(
+      children: [
+        // Image
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 8),
+          child: Container(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(24),
+              shape: BoxShape.rectangle,
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.2),
+                  blurRadius: 10,
+                  spreadRadius: 7, // x, y
+                ),
+              ],
+            ),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(30),
               child: Image.network(image, height: 400, fit: BoxFit.cover),
             ),
-
-            const SizedBox(height: 32),
-
-            // Title
-            Text(
-              title,
-              textAlign: TextAlign.center,
-              style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-            ),
-
-            const SizedBox(height: 12),
-
-            // Description
-            Text(
-              description,
-              textAlign: TextAlign.center,
-              style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
-            ),
-
-            const Spacer(),
-
-            // Button
-            SizedBox(
-              width: double.infinity,
-              height: 55,
-              child: ElevatedButton(
-                onPressed: () {},
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFF5B5BD6),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: Text(
-                  'Create Account',
-                  style: TextStyle(fontSize: 18, color: kColorTextLight),
-                ),
-              ),
-            ),
-
-            const SizedBox(height: 16),
-
-            // Login text
-            TextButton(
-              onPressed: () {},
-              child: const Text('Already Have an Account'),
-            ),
-
-            const SizedBox(height: 24),
-          ],
+          ),
         ),
-      ),
+
+        const SizedBox(height: 32),
+
+        // Title
+        Text(
+          title,
+          textAlign: TextAlign.center,
+          style: const TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+        ),
+
+        const SizedBox(height: 12),
+
+        // Description
+        Text(
+          description,
+          textAlign: TextAlign.center,
+          style: TextStyle(fontSize: 14, color: Colors.grey.shade600),
+        ),
+      ],
     );
   }
 }

@@ -5,20 +5,20 @@ import 'package:get/get.dart';
 
 import '../../constants/constant.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+class AllProductsScreen extends StatefulWidget {
+  const AllProductsScreen({super.key});
 
   @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
+  State<AllProductsScreen> createState() => _AllProductsScreenState();
 }
 
-class _FavoriteScreenState extends State<FavoriteScreen> {
+class _AllProductsScreenState extends State<AllProductsScreen> {
   final ProductController controller = Get.find();
 
   @override
   void initState() {
     super.initState();
-    controller.fetchFavorite();
+    controller.fetchProducts();
   }
 
   @override
@@ -34,7 +34,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
       ),
       body: RefreshIndicator(
         onRefresh: () async {
-          await controller.fetchFavorite();
+          await controller.fetchProducts();
         },
         child: GetBuilder<ProductController>(
           builder:
