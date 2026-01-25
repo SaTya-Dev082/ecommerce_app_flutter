@@ -184,7 +184,6 @@ class _SearchState extends State<Search> {
                             Get.to(ProductDetailScreen(product: product));
                           },
                           selected: true,
-                          // selectedTileColor: Colors.blue.shade100,
                           leading: Container(
                             height: Get.height * 0.1,
                             width: Get.width * 0.2,
@@ -216,17 +215,6 @@ class _SearchState extends State<Search> {
                             style: TextStyle(
                               fontSize: kSizeVerySmall,
                               color: kColorTextGrey,
-                            ),
-                          ),
-                          trailing: SizedBox(
-                            height: 40,
-                            width: 80,
-                            child: ElevatedButton(
-                              onPressed: () {},
-                              child: Text(
-                                "Hot",
-                                style: TextStyle(color: Colors.black),
-                              ),
                             ),
                           ),
                         );

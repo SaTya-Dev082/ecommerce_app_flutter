@@ -35,8 +35,7 @@ class SettingsScreen extends StatelessWidget {
                           ? ClipRRect(
                             borderRadius: BorderRadius.circular(50),
                             child: CachedNetworkImage(
-                              imageUrl:
-                                  "https://i.pinimg.com/736x/51/b6/b4/51b6b404e5a029c5e97087340be4eb90.jpg",
+                              imageUrl: "http://10.0.2.2:8000${user.avatar}",
                               width: 90,
                               height: 90,
                               fit: BoxFit.cover,
@@ -68,9 +67,7 @@ class SettingsScreen extends StatelessWidget {
             icon: Icons.person_outline,
             title: "Edit Profile",
             onTap: () {
-              Get.to(
-                EditProfileScreen(userModel: controller.currentUser.value!),
-              );
+              Get.to(EditProfileScreen(user: controller.currentUser.value!));
             },
           ),
           settingTile(
@@ -102,7 +99,18 @@ class SettingsScreen extends StatelessWidget {
           ),
           settingTile(icon: Icons.help_outline, title: "Help & Support"),
           const SizedBox(height: 16),
-          logoutTile(),
+          logoutTile(
+            "Log Out",
+            onTap: () {
+              controller.logoutCurrent();
+            },
+          ),
+          logoutTile(
+            "Log Out all devices",
+            onTap: () {
+              controller.logoutAll();
+            },
+          ),
         ],
       ),
     );

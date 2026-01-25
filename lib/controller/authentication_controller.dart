@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:e_commerce_app/controller/storage_service.dart';
 import 'package:e_commerce_app/model/user_model.dart';
 import 'package:e_commerce_app/view/authentication/login_screen.dart';
 import 'package:e_commerce_app/view/screens/main_screen.dart';
+import 'package:e_commerce_app/view/screens/profile.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
@@ -26,7 +28,7 @@ class AuthenticationController extends GetxController {
     required String email,
     required String password,
     required String password_confirmation,
-    String? avatar,
+    File? avatar,
   }) async {
     try {
       isLoading = true;
@@ -44,7 +46,9 @@ class AuthenticationController extends GetxController {
       });
 
       if (avatar != null) {
-        request.files.add(await http.MultipartFile.fromPath('avatar', avatar));
+        request.files.add(
+          await http.MultipartFile.fromPath('avatar', avatar.path),
+        );
       }
 
       final streamedResponse = await request.send();
@@ -60,6 +64,7 @@ class AuthenticationController extends GetxController {
           backgroundColor: Color(0xFF4BB543),
           colorText: Colors.white,
         );
+        Get.offAll(MainScreen());
       } else {
         Get.snackbar("Error", data['message'] ?? 'Register failed');
       }
@@ -152,7 +157,7 @@ class AuthenticationController extends GetxController {
   Future<void> updateProfile({
     required String name,
     required String email,
-    String? avatar,
+    File? avatar,
   }) async {
     try {
       isLoading = true;
@@ -165,7 +170,9 @@ class AuthenticationController extends GetxController {
 
       request.headers['Authorization'] = 'Bearer $token';
       if (avatar != null) {
-        request.files.add(await http.MultipartFile.fromPath('avatar', avatar));
+        request.files.add(
+          await http.MultipartFile.fromPath('avatar', avatar.path),
+        );
       }
 
       request.fields.addAll({'name': name});
@@ -178,12 +185,7 @@ class AuthenticationController extends GetxController {
 
       if (response.statusCode == 200) {
         await getProfile();
-        Get.snackbar(
-          "Success",
-          "Profile updated successfully",
-          backgroundColor: Color(0xFF4BB543),
-          colorText: Colors.white,
-        );
+        Get.back();
       } else {
         Get.snackbar("Error", data['message'] ?? 'Update failed');
       }

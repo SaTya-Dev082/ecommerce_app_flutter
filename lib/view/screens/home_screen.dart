@@ -7,6 +7,7 @@ import 'package:e_commerce_app/view/screens/favorite_screen.dart';
 import 'package:e_commerce_app/view/widgets/all_products.dart';
 import 'package:e_commerce_app/view/widgets/category_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_widget.dart';
+import 'package:e_commerce_app/view/widgets/setting_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
@@ -115,9 +116,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         return Center(child: CircularProgressIndicator());
                       }
                       return blockProfileHome(
-                        imagePath:
-                            "https://i.pinimg.com/736x/51/b6/b4/51b6b404e5a029c5e97087340be4eb90.jpg",
-                        // "http://10.0.2.2:8000${user.avatar}",
+                        imagePath: "http://10.0.2.2:8000${user.avatar}",
                         username: user.name!,
                       );
                     }),
@@ -165,27 +164,39 @@ class _HomeScreenState extends State<HomeScreen> {
     return Row(
       spacing: 10,
       children: [
-        CircleAvatar(
-          backgroundColor: Colors.brown,
-          backgroundImage: NetworkImage(imagePath),
-          radius: 35,
+        GestureDetector(
+          onTap: () {
+            print("Settings");
+            Get.to(SettingsScreen());
+          },
+          child: CircleAvatar(
+            backgroundColor: Colors.brown,
+            backgroundImage: NetworkImage(imagePath),
+            radius: 35,
+          ),
         ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text(
-              "Hi, $username",
-              style: TextStyle(
-                fontSize: kSizeLarge,
-                color: kColorTextDark,
-                fontWeight: FontWeight.bold,
+        GestureDetector(
+          onTap: () {
+            print("Settings");
+            Get.to(SettingsScreen());
+          },
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                "Hi, $username",
+                style: TextStyle(
+                  fontSize: kSizeLarge,
+                  color: kColorTextDark,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-            ),
-            Text(
-              "Enjoy your time",
-              style: TextStyle(fontSize: kSizeSmall, color: kColorTextGrey),
-            ),
-          ],
+              Text(
+                "Enjoy your time",
+                style: TextStyle(fontSize: kSizeSmall, color: kColorTextGrey),
+              ),
+            ],
+          ),
         ),
         Spacer(),
         IconButton(

@@ -29,7 +29,6 @@ class CategoryWidget extends StatelessWidget {
             itemBuilder: (context, index) {
               bool isEven = index % 2 == 0;
               final category = controller.categories[index];
-
               return GestureDetector(
                 onTap: () {
                   Get.to(
