@@ -42,7 +42,7 @@ Widget settingTile({
   );
 }
 
-Widget logoutTile() {
+Widget logoutTile(String title, {required VoidCallback onTap}) {
   return GetBuilder<AuthenticationController>(
     builder:
         (controller) => Card(
@@ -52,11 +52,8 @@ Widget logoutTile() {
           ),
           child: ListTile(
             leading: const Icon(Icons.logout, color: Colors.red),
-            title: const Text("Logout", style: TextStyle(color: Colors.red)),
-            onTap: () {
-              // showBottomSheet();
-              controller.logoutCurrent();
-            },
+            title: Text(title, style: TextStyle(color: Colors.red)),
+            onTap: onTap,
           ),
         ),
   );

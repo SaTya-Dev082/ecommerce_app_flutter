@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:e_commerce_app/constants/constant.dart';
+import 'package:e_commerce_app/controller/authentication_controller.dart';
 import 'package:e_commerce_app/controller/home_controller.dart';
 import 'package:e_commerce_app/view/authentication/input_field_screen.dart';
 import 'package:e_commerce_app/view/authentication/login_screen.dart';
@@ -22,9 +23,11 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController passwordConfirmController =
       TextEditingController();
+
   final _formKey = GlobalKey<FormState>();
 
-  final HomeController controller = Get.find();
+  final HomeController homeController = Get.find();
+  final AuthenticationController authController = Get.find();
 
   bool isShowPassword = false;
   bool isShowPasswordConfirm = false;
@@ -136,28 +139,39 @@ class _CreateAccountScreenState extends State<CreateAccountScreen> {
                   obscure: true,
                 ),
 
-                SizedBox(
-                  width: double.infinity,
-                  height: 52,
-                  child: ElevatedButton(
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        Text(
-                          "Username : ${usernameController.text}\nEmail : ${emailController.text}\nPassword : ${passwordController.text}\nPassword Confirmation : ${passwordConfirmController.text}",
-                        );
-                      }
-                    },
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFF5B5BD6),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                GetBuilder<AuthenticationController>(
+                  builder:
+                      (controller) => SizedBox(
+                        width: double.infinity,
+                        height: 52,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              controller.register(
+                                name: usernameController.text,
+                                email: emailController.text,
+                                password: passwordController.text,
+                                password_confirmation:
+                                    passwordConfirmController.text,
+                                avatar: homeController.avatar,
+                              );
+                            }
+                          },
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: const Color(0xFF5B5BD6),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            'Create account',
+                            style: TextStyle(
+                              fontSize: 16,
+                              color: kColorTextLight,
+                            ),
+                          ),
+                        ),
                       ),
-                    ),
-                    child: Text(
-                      'Create account',
-                      style: TextStyle(fontSize: 16, color: kColorTextLight),
-                    ),
-                  ),
                 ),
 
                 Center(
