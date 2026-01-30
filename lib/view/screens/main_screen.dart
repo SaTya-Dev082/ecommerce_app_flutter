@@ -1,8 +1,8 @@
 import 'package:e_commerce_app/controller/home_controller.dart';
-import 'package:e_commerce_app/view/screens/favorite_screen.dart';
 import 'package:e_commerce_app/view/screens/home_screen.dart';
 import 'package:e_commerce_app/view/screens/my_card_screen.dart';
 import 'package:e_commerce_app/view/screens/profile.dart';
+import 'package:e_commerce_app/view/screens/cart_select_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -25,8 +25,8 @@ class MainScreen extends StatelessWidget {
               },
               children: [
                 HomeScreen(),
-                MyCardScreen(),
-                FavoriteScreen(),
+                MyOrderScreen(),
+                CartSummaryScreen(),
                 ProfileScreen(),
               ],
             ),
@@ -52,9 +52,9 @@ class MainScreen extends StatelessWidget {
                   label: "My Order",
                 ),
                 BottomNavigationBarItem(
-                  icon: Icon(Icons.favorite_border),
-                  activeIcon: Icon(Icons.favorite),
-                  label: "Favorite",
+                  icon: Icon(Icons.shopping_cart_outlined),
+                  activeIcon: Icon(Icons.shopping_cart),
+                  label: "Card",
                 ),
                 BottomNavigationBarItem(
                   icon: Icon(Icons.person_outline_outlined),

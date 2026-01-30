@@ -3,7 +3,7 @@ import 'dart:async' show Timer;
 import 'package:e_commerce_app/controller/authentication_controller.dart';
 import 'package:e_commerce_app/controller/category_controller.dart';
 import 'package:e_commerce_app/controller/product_controller.dart';
-import 'package:e_commerce_app/view/screens/favorite_screen.dart';
+import 'package:e_commerce_app/view/widgets/favorite_screen.dart';
 import 'package:e_commerce_app/view/widgets/all_products.dart';
 import 'package:e_commerce_app/view/widgets/category_widget.dart';
 import 'package:e_commerce_app/view/widgets/home_widget.dart';

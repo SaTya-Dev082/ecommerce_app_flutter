@@ -1,14 +1,32 @@
 import 'package:e_commerce_app/constants/constant.dart';
+import 'package:e_commerce_app/controller/cart_controller.dart';
+import 'package:e_commerce_app/controller/home_controller.dart';
 import 'package:e_commerce_app/controller/product_controller.dart';
+import 'package:e_commerce_app/view/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../model/product_model.dart';
+import '../screens/cart_select_screen.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   ProductDetailScreen({super.key, required this.product});
   final Product product;
-  final ProductController controller = Get.find();
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  final ProductController productController = Get.find();
+  final CartController cartController = Get.find();
+  final HomeController homeController = Get.find();
+
+  int quantity = 1;
+
+  double price = 8.2;
+
+  double amount = 0.0;
 
   @override
   Widget build(BuildContext context) {
@@ -26,15 +44,24 @@ class ProductDetailScreen extends StatelessWidget {
                 },
               ),
               actions: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.shopping_bag_outlined,
-                    color: Colors.black,
-                  ),
-                  onPressed: () {},
+                GetBuilder<HomeController>(
+                  builder:
+                      (controller) => IconButton(
+                        icon: const Icon(
+                          Icons.shopping_bag_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          controller.currentIndex = 0;
+                          Get.offAll(MainScreen());
+                        },
+                      ),
                 ),
               ],
-              title: Text(product.name!, style: TextStyle(color: Colors.black)),
+              title: Text(
+                widget.product.name!,
+                style: TextStyle(color: Colors.black),
+              ),
               centerTitle: true,
             ),
             body: Column(
@@ -47,7 +74,7 @@ class ProductDetailScreen extends StatelessWidget {
                         Padding(
                           padding: const EdgeInsets.all(16.0),
                           child: Image.network(
-                            "http://10.0.2.2:8000${product.imageUrl}",
+                            "http://10.0.2.2:8000${widget.product.imageUrl}",
                             // Replace with your image
                             height: 250,
                             fit: BoxFit.cover,
@@ -73,7 +100,7 @@ class ProductDetailScreen extends StatelessWidget {
                                 children: [
                                   Expanded(
                                     child: Text(
-                                      product.name!,
+                                      widget.product.name!,
                                       style: TextStyle(
                                         fontSize: kSizeMedium,
                                         fontWeight: FontWeight.bold,
@@ -83,19 +110,33 @@ class ProductDetailScreen extends StatelessWidget {
                                   Row(
                                     children: [
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            if (quantity >= 1) {
+                                              quantity--;
+                                            } else {
+                                              quantity = 0;
+                                            }
+                                          });
+                                        },
                                         icon: const Icon(
                                           Icons.remove_circle_outline,
+                                          color: Colors.red,
                                         ),
                                       ),
                                       Text(
-                                        product.quantity.toString(),
+                                        quantity.toString(),
                                         style: const TextStyle(fontSize: 18),
                                       ),
                                       IconButton(
-                                        onPressed: () {},
+                                        onPressed: () {
+                                          setState(() {
+                                            quantity++;
+                                          });
+                                        },
                                         icon: const Icon(
                                           Icons.add_circle_outline,
+                                          color: Colors.blue,
                                         ),
                                       ),
                                     ],
@@ -132,7 +173,7 @@ class ProductDetailScreen extends StatelessWidget {
                               ),
                               const SizedBox(height: 8),
                               Text(
-                                product.description!,
+                                widget.product.description!,
                                 style: TextStyle(color: Colors.grey),
                               ),
                               const SizedBox(height: 16),
@@ -142,37 +183,54 @@ class ProductDetailScreen extends StatelessWidget {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
-                                    '\$${product.price}',
+                                    '\$${widget.product.price}',
                                     style: TextStyle(
                                       fontSize: 24,
                                       fontWeight: FontWeight.bold,
                                       color: Colors.black,
                                     ),
                                   ),
-                                  ElevatedButton.icon(
-                                    onPressed: () {},
-                                    style: ElevatedButton.styleFrom(
-                                      backgroundColor: Colors.deepPurple,
-                                      padding: const EdgeInsets.symmetric(
-                                        horizontal: 20,
-                                        vertical: 12,
-                                      ),
-                                      shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(12),
-                                      ),
-                                    ),
-                                    icon: Icon(
-                                      Icons.shopping_cart_outlined,
-                                      color: kColorTextLight,
-                                    ),
-                                    label: Text(
-                                      'Add to Cart',
-                                      style: TextStyle(
-                                        fontSize: kSizeSmall,
-                                        fontWeight: FontWeight.bold,
-                                        color: kColorTextLight,
-                                      ),
-                                    ),
+                                  GetBuilder<CartController>(
+                                    builder:
+                                        (controller) => ElevatedButton.icon(
+                                          onPressed: () {
+                                            controller.addToCart(
+                                              widget.product.id!,
+                                            );
+                                          },
+                                          style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.deepPurple,
+                                            padding: const EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 12,
+                                            ),
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(12),
+                                            ),
+                                          ),
+                                          icon: Icon(
+                                            Icons.shopping_cart_outlined,
+                                            color: kColorTextLight,
+                                          ),
+                                          label:
+                                          // Text(
+                                          //   'Total amount',
+                                          //   style: TextStyle(
+                                          //     fontSize: kSizeSmall,
+                                          //     fontWeight: FontWeight.bold,
+                                          //     color: kColorTextLight,
+                                          //   ),
+                                          // ),
+                                          Text(
+                                            'Add to Cart',
+                                            style: TextStyle(
+                                              fontSize: kSizeSmall,
+                                              fontWeight: FontWeight.bold,
+                                              color: kColorTextLight,
+                                            ),
+                                          ),
+                                        ),
                                   ),
                                 ],
                               ),
@@ -187,5 +245,11 @@ class ProductDetailScreen extends StatelessWidget {
             ),
           ),
     );
+  }
+
+  totalAmount(int quantity, String price) {
+    double priceDouble = double.parse(price);
+    amount = priceDouble * quantity;
+    return amount;
   }
 }
