@@ -1,6 +1,7 @@
-import 'package:e_commerce_app/view/screens/favorite_screen.dart';
+import 'package:e_commerce_app/view/widgets/favorite_screen.dart';
 import 'package:e_commerce_app/view/screens/main_screen.dart';
 import 'package:e_commerce_app/view/screens/profile.dart';
+import 'package:e_commerce_app/view/screens/cart_select_screen.dart';
 import 'package:get/get.dart';
 
 import '../view/authentication/create_account_screen.dart';
@@ -10,6 +11,7 @@ import '../view/widgets/setting_screen.dart';
 
 List<GetPage<dynamic>>? getPages = [
   GetPage(name: "/", page: () => MainScreen()),
+  GetPage(name: "/cart", page: () => CartSummaryScreen()),
   GetPage(name: "/favorite", page: () => FavoriteScreen()),
   GetPage(name: "/setting", page: () => ProfileScreen()),
   GetPage(name: "/onboarding", page: () => OnboardingPage()),

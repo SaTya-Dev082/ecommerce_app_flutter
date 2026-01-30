@@ -44,7 +44,7 @@ class ProductController extends GetxController {
       );
       if (response.statusCode == 200) {
         final data = jsonDecode(response.body)["products"];
-        final jsonProduct = jsonDecode(response.body)["products"].toList();
+        final jsonProduct = data.toList();
         products = List.from(jsonProduct.map((e) => Product.fromJson(e)));
       } else {
         Get.snackbar("Error", "Status: ${response.statusCode}");
